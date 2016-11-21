@@ -88,12 +88,12 @@
 		<repository>
 			<id>plugin-release-local</id>
 			<name>REstore artifactory own releases</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-release</url>
+			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-release-local</url>
 		</repository>
 		<snapshotRepository>
 			<id>plugins-snapshot-local</id>
 			<name>REstore artifactory own snapshots</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-release</url>
+			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-snapshot-local</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
