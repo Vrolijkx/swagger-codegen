@@ -85,16 +85,18 @@
         </pluginManagement>
     </build>
 
-	<distributionManagement>
-		<repository>
+	<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 			<id>artifactory-plugin-repository</id>
-			<name>REstore artifactory own releases</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-release</url>
-		</repository>
-		<snapshotRepository>
-			<id>plugins-snapshot-local</id>
-			<name>REstore artifactory own snapshots</name>
+			<name>REstore virtual repository for Maven</name>
 			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
