@@ -12,6 +12,7 @@
     <name>swagger-codegen (maven-plugin)</name>
     <packaging>maven-plugin</packaging>
     <description>maven plugin to build modules from swagger codegen</description>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -86,9 +87,9 @@
 
 	<distributionManagement>
 		<repository>
-			<id>plugin-release-local</id>
+			<id>artifactory-plugin-repository</id>
 			<name>REstore artifactory own releases</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-release-local</url>
+			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-release</url>
 		</repository>
 		<snapshotRepository>
 			<id>plugins-snapshot-local</id>
