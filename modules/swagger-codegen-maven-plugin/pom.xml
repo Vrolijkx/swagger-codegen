@@ -84,32 +84,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>daily</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<id>artifactory-plugin-snapshot-repository</id>
-			<name>REstore artifactory own snapshot plugins</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-snapshot-local</url>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<distributionManagement>
-		<repository>
-			<id>artifactory-plugin-repository</id>
-			<name>REstore artifactory own releases</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-release</url>
-		</repository>
-		<snapshotRepository>
-			<id>artifactory-plugin-snapshot-repository</id>
-			<name>REstore artifactory own snapshot plugins</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/plugins-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
