@@ -2,17 +2,7 @@ package io.swagger.codegen.config;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.ClientOpts;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConfigLoader;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.auth.AuthParser;
-import io.swagger.models.Swagger;
-import io.swagger.models.auth.AuthorizationValue;
-import io.swagger.parser.SwaggerParser;
-import io.swagger.util.Json;
+
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +15,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.ClientOpts;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConfigLoader;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.auth.AuthParser;
+import io.swagger.models.Swagger;
+import io.swagger.models.auth.AuthorizationValue;
+import io.swagger.parser.SwaggerParser;
+import io.swagger.util.Json;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
