@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.3.5.RESTORE-SNAPSHOT</version>
+    <version>2.3.5.RESTORE</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -841,18 +841,18 @@
         </dependencies>
     </dependencyManagement>
 
-	<distributionManagement>
-		<repository>
-			<id>libs-release-local</id>
-			<name>REstore artifactory own releases</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/libs-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>libs-snapshot-local</id>
-			<name>REstore artifactory own snapshots</name>
-			<url>http://artifactory.devops.flexpond.com:8081/artifactory/libs-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>REstore releases</name>
+            <url>http://nexus.devops.flexpond.net:8081/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-releases</id>
+            <name>REstore snapshots</name>
+            <url>http://nexus.devops.flexpond.net:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <swagger-parser-version>1.0.25</swagger-parser-version>
