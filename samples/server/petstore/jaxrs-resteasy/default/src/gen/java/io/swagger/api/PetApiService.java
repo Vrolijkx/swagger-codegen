@@ -1,15 +1,21 @@
 package io.swagger.api;
 
+import io.swagger.api.*;
+import io.swagger.model.*;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+
+
+import java.io.File;
+import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
+
 import java.util.List;
+import io.swagger.api.NotFoundException;
+
+import java.io.InputStream;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
-import io.swagger.api.*;
-import io.swagger.api.NotFoundException;
-import io.swagger.model.Pet;
 
 
 public abstract class PetApiService {

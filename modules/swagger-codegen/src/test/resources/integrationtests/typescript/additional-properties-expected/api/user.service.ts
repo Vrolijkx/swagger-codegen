@@ -53,21 +53,6 @@ export class UserService {
 			this.basePath = basePath || configuration.basePath || this.basePath;
         }
     }
-	
-	/**
-     * 
-     * Extends object by coping non-existing properties.
-     * @param objA object to be extended
-     * @param objB source object
-     */
-    private extendObj<T1,T2>(objA: T1, objB: T2) {
-        for(let key in objB){
-            if(objB.hasOwnProperty(key)){
-                objA[key] = objB[key];
-            }
-        }
-        return <T1&T2>objA;
-    }
 
     /**
      * Add a new User to the store
@@ -133,13 +118,9 @@ export class UserService {
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            responseType: ResponseContentType.Json
         });
-        
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
-        }
 
         return this.http.request(path, requestOptions);
     }
@@ -175,13 +156,9 @@ export class UserService {
             method: RequestMethod.Put,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            responseType: ResponseContentType.Json
         });
-        
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
-        }
 
         return this.http.request(path, requestOptions);
     }

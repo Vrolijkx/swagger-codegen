@@ -8,7 +8,7 @@ import io.swagger.api.*;
 import io.swagger.model.Order;
 
 @RequestScoped
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-10-11T07:40:42.070+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-11-17T08:53:42.205Z")
 public class StoreApiServiceImpl implements StoreApiService {
       @Override
       public Response deleteOrder(String orderId, SecurityContext securityContext) {

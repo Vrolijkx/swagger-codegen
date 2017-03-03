@@ -1,21 +1,30 @@
 package io.swagger.api;
 
-import java.io.InputStream;
-import java.util.List;
+import io.swagger.model.*;
+import io.swagger.api.PetApiService;
+import io.swagger.api.factories.PetApiServiceFactory;
 
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import io.swagger.annotations.ApiParam;
+import io.swagger.jaxrs.*;
+
+import com.sun.jersey.multipart.FormDataParam;
+
+import java.io.File;
+import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
+
+import java.util.List;
+import io.swagger.api.NotFoundException;
+
+import java.io.InputStream;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
-import io.swagger.annotations.ApiParam;
-import io.swagger.api.NotFoundException;
-import io.swagger.api.PetApiService;
-import io.swagger.api.factories.PetApiServiceFactory;
-import io.swagger.model.ModelApiResponse;
-import io.swagger.model.Pet;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.*;
 
 @Path("/pet")
 

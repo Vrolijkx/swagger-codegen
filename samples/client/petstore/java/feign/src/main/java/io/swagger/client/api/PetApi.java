@@ -1,12 +1,16 @@
 package io.swagger.client.api;
 
-import java.io.File;
-import java.util.List;
-
-import feign.*;
 import io.swagger.client.ApiClient;
+
+import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import feign.*;
 
 
 public interface PetApi extends ApiClient.Api {

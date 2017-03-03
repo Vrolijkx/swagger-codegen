@@ -1,13 +1,22 @@
 package io.swagger.client.api;
 
-import java.util.List;
-
 import io.swagger.client.CollectionFormats.*;
+
+import rx.Observable;
+
+import retrofit2.http.*;
+
+import okhttp3.RequestBody;
+
+import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
-import okhttp3.RequestBody;
-import retrofit2.http.*;
-import rx.Observable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public interface PetApi {
   /**
@@ -17,6 +26,9 @@ public interface PetApi {
    * @return Call&lt;Void&gt;
    */
   
+  @Headers({
+  	"Content-Type:application/json" 
+  })
   @POST("pet")
   Observable<Void> addPet(
     @retrofit2.http.Body Pet body
@@ -78,6 +90,9 @@ public interface PetApi {
    * @return Call&lt;Void&gt;
    */
   
+  @Headers({
+  	"Content-Type:application/json" 
+  })
   @PUT("pet")
   Observable<Void> updatePet(
     @retrofit2.http.Body Pet body

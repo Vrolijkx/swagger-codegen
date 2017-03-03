@@ -1,6 +1,7 @@
 package io.swagger.api;
 
 import java.util.List;
+import io.swagger.model.User;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.swagger.model.User;
 
 
-@Api(value = "user", description = "the user API")
+@Api(value = "User", description = "the User API")
 public interface UserApi {
 
     @ApiOperation(value = "Create user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user", })

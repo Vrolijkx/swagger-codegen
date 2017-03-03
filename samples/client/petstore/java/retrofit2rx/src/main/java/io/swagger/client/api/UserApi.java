@@ -7,6 +7,7 @@ import io.swagger.client.model.User;
 import retrofit2.http.*;
 import rx.Observable;
 
+
 public interface UserApi {
   /**
    * Create user

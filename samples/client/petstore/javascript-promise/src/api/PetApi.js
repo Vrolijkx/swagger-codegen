@@ -9,34 +9,23 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Pet', 'model/ApiResponse'], factory);
+    define(['ApiClient', 'model/ApiResponse', 'model/Pet'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/Pet'), require('../model/ApiResponse'));
+    module.exports = factory(require('../ApiClient'), require('../model/ApiResponse'), require('../model/Pet'));
   } else {
     // Browser globals (root is window)
     if (!root.SwaggerPetstore) {
       root.SwaggerPetstore = {};
     }
-    root.SwaggerPetstore.PetApi = factory(root.SwaggerPetstore.ApiClient, root.SwaggerPetstore.Pet, root.SwaggerPetstore.ApiResponse);
+    root.SwaggerPetstore.PetApi = factory(root.SwaggerPetstore.ApiClient, root.SwaggerPetstore.ApiResponse, root.SwaggerPetstore.Pet);
   }
-}(this, function(ApiClient, Pet, ApiResponse) {
+}(this, function(ApiClient, ApiResponse, Pet) {
   'use strict';
 
   /**
@@ -76,6 +65,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -88,7 +79,7 @@
 
       return this.apiClient.callApi(
         '/pet', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -117,6 +108,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
         'api_key': opts['apiKey']
       };
@@ -130,7 +123,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'DELETE',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -154,7 +147,12 @@
       var pathParams = {
       };
       var queryParams = {
-        'status': this.apiClient.buildCollectionParam(status, 'csv')
+      };
+      var collectionQueryParams = {
+        'status': {
+          value: status,
+          collectionFormat: 'csv'
+        },
       };
       var headerParams = {
       };
@@ -168,7 +166,7 @@
 
       return this.apiClient.callApi(
         '/pet/findByStatus', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -192,7 +190,12 @@
       var pathParams = {
       };
       var queryParams = {
-        'tags': this.apiClient.buildCollectionParam(tags, 'csv')
+      };
+      var collectionQueryParams = {
+        'tags': {
+          value: tags,
+          collectionFormat: 'csv'
+        },
       };
       var headerParams = {
       };
@@ -206,7 +209,7 @@
 
       return this.apiClient.callApi(
         '/pet/findByTags', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -232,6 +235,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -244,7 +249,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -269,6 +274,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -281,7 +288,7 @@
 
       return this.apiClient.callApi(
         '/pet', 'PUT',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -311,6 +318,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -325,7 +334,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -355,6 +364,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -369,7 +380,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}/uploadImage', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }

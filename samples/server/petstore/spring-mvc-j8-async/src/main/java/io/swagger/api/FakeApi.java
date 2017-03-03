@@ -1,27 +1,30 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
+import io.swagger.model.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
+import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
-import io.swagger.model.Client;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 @Api(value = "fake", description = "the fake API")
 public interface FakeApi {
 
-    @ApiOperation(value = "To test \"client\" model", notes = "", response = Client.class, tags={ "fake", })
+    @ApiOperation(value = "To test \"client\" model", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     @RequestMapping(value = "/fake",
@@ -63,13 +66,13 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "To test enum parameters", notes = "", response = Void.class, tags={ "fake", })
+    @ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = Void.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         @ApiResponse(code = 404, message = "Not found", response = Void.class) })
     @RequestMapping(value = "/fake",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
+        produces = { "*/*" }, 
+        consumes = { "*/*" },
         method = RequestMethod.GET)
     default CompletableFuture<ResponseEntity<Void>> testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)" , allowableValues="GREATER_THAN, DOLLAR") @RequestPart(value="enumFormStringArray", required=false)  List<String> enumFormStringArray,
         @ApiParam(value = "Form parameter enum test (string)" , allowableValues="_ABC, _EFG, _XYZ_", defaultValue="-efg") @RequestPart(value="enumFormString", required=false)  String enumFormString,
@@ -77,7 +80,7 @@ public interface FakeApi {
         @ApiParam(value = "Header parameter enum test (string)"  , allowableValues="_ABC, _EFG, _XYZ_", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,
         @ApiParam(value = "Query parameter enum test (string array)", allowableValues = "GREATER_THAN, DOLLAR") @RequestParam(value = "enumQueryStringArray", required = false) List<String> enumQueryStringArray,
         @ApiParam(value = "Query parameter enum test (string)", allowableValues = "_ABC, _EFG, _XYZ_", defaultValue = "-efg") @RequestParam(value = "enumQueryString", required = false, defaultValue="-efg") String enumQueryString,
-        @ApiParam(value = "Query parameter enum test (double)") @RequestParam(value = "enumQueryInteger", required = false) BigDecimal enumQueryInteger,
+        @ApiParam(value = "Query parameter enum test (double)") @RequestParam(value = "enumQueryInteger", required = false) Integer enumQueryInteger,
         @ApiParam(value = "Query parameter enum test (double)" ) @RequestPart(value="enumQueryDouble", required=false)  Double enumQueryDouble) {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Void>(HttpStatus.OK));

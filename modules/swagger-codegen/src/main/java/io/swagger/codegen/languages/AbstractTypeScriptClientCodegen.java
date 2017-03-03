@@ -26,6 +26,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     protected String modelPropertyNaming= "camelCase";
     protected Boolean supportsES6 = true;
+    protected HashSet<String> languageGenericTypes;
 
     public AbstractTypeScriptClientCodegen() {
         super();
@@ -43,23 +44,28 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 "abstract", "await", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else", "enum", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "transient", "true", "try", "typeof", "var", "void", "volatile", "while", "with", "yield"));
 
         languageSpecificPrimitives = new HashSet<>(Arrays.asList(
-				"string",
-				"String",
-				"boolean",
-				"Boolean",
-				"Double",
-				"Integer",
-				"Long",
-				"Float",
-				"Object",
-				"Array",
-				"Date",
-				"number",
-				"any",
-				"File",
-				"Error",
-				"Map"
-				));
+                "string",
+                "String",
+                "boolean",
+                "Boolean",
+                "Double",
+                "Integer",
+                "Long",
+                "Float",
+                "Object",
+                "Array",
+                "Date",
+                "number",
+                "any",
+                "File",
+                "Error",
+                "Map"
+                ));
+
+        languageGenericTypes = new HashSet<String>(Arrays.asList(
+                "Array"
+        ));
+
         instantiationTypes.put("array", "Array");
 
         typeMapping = new HashMap<String, String>();
@@ -101,88 +107,94 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ES6)) {
-            setSupportsES6(Boolean.valueOf((String)additionalProperties.get(CodegenConstants.SUPPORTS_ES6)));
+            setSupportsES6(Boolean.valueOf(additionalProperties.get(CodegenConstants.SUPPORTS_ES6).toString()));
             additionalProperties.put("supportsES6", getSupportsES6());
         }
     }
 
 
-	@Override
-	public CodegenType getTag() {
-	    return CodegenType.CLIENT;
-	}
+    @Override
+    public CodegenType getTag() {
+        return CodegenType.CLIENT;
+    }
 
-	@Override
-	public String escapeReservedWord(String name) {
-		return "_" + name;
-	}
+    @Override
+    public String escapeReservedWord(String name) {
+        return "_" + name;
+    }
 
-	@Override
-	public String apiFileFolder() {
-		return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
-	}
+    @Override
+    public String apiFileFolder() {
+        return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
+    }
 
-	@Override
-	public String modelFileFolder() {
-		return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
-	}
+    @Override
+    public String modelFileFolder() {
+        return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
+    }
 
-	@Override
-	public String toParamName(String name) {
-		// replace - with _ e.g. created-at => created_at
-		name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+    @Override
+    public String toParamName(String name) {
+        // replace - with _ e.g. created-at => created_at
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
-		// if it's all uppper case, do nothing
-		if (name.matches("^[A-Z_]*$"))
-			return name;
+        // if it's all uppper case, do nothing
+        if (name.matches("^[A-Z_]*$"))
+            return name;
 
-		// camelize the variable name
-		// pet_id => petId
-		name = camelize(name, true);
+        // camelize the variable name
+        // pet_id => petId
+        name = camelize(name, true);
 
-		// for reserved word or word starting with number, append _
-		if (isReservedWord(name) || name.matches("^\\d.*"))
-			name = escapeReservedWord(name);
+        // for reserved word or word starting with number, append _
+        if (isReservedWord(name) || name.matches("^\\d.*"))
+            name = escapeReservedWord(name);
 
-		return name;
-	}
+        return name;
+    }
 
-	@Override
-	public String toVarName(String name) {
-		// should be the same as variable name
-		return getNameUsingModelPropertyNaming(name);
-	}
+    @Override
+    public String toVarName(String name) {
+            // should be the same as variable name
+            return getNameUsingModelPropertyNaming(name);
+    }
 
-	@Override
-	public String toModelName(String name) {
-		name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+    @Override
+    public String toModelName(String name) {
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
-		if (!StringUtils.isEmpty(modelNamePrefix)) {
-			name = modelNamePrefix + "_" + name;
-		}
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            name = modelNamePrefix + "_" + name;
+        }
 
-		if (!StringUtils.isEmpty(modelNameSuffix)) {
-			name = name + "_" + modelNameSuffix;
-		}
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            name = name + "_" + modelNameSuffix;
+        }
 
-		// model name cannot use reserved keyword, e.g. return
-		if (isReservedWord(name)) {
-			String modelName = camelize("model_" + name);
-			LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
-			return modelName;
-		}
+        // model name cannot use reserved keyword, e.g. return
+        if (isReservedWord(name)) {
+            String modelName = camelize("model_" + name);
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
+        }
 
-		// model name starts with number
-		if (name.matches("^\\d.*")) {
-			String modelName = camelize("model_" + name); // e.g. 200Response => Model200Response (after camelize)
-			LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
-			return modelName;
-		}
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            String modelName = camelize("model_" + name); // e.g. 200Response => Model200Response (after camelize)
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
+        }
 
-		// camelize the model name
-		// phone_number => PhoneNumber
-		return camelize(name);
-	}
+        if (languageSpecificPrimitives.contains(name)) {
+            String modelName = camelize("model_" + name);
+            LOGGER.warn(name + " (model name matches existing language type) cannot be used as a model name. Renamed to " + modelName);
+            return modelName;
+        }
+
+        // camelize the model name
+        // phone_number => PhoneNumber
+        return camelize(name);
+    }
 
     @Override
     public String toModelFilename(String name) {

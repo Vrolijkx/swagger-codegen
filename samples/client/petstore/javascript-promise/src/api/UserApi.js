@@ -9,17 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 (function(root, factory) {
@@ -76,6 +65,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -88,7 +79,7 @@
 
       return this.apiClient.callApi(
         '/user', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -113,6 +104,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -125,7 +118,7 @@
 
       return this.apiClient.callApi(
         '/user/createWithArray', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -150,6 +143,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -162,7 +157,7 @@
 
       return this.apiClient.callApi(
         '/user/createWithList', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -188,6 +183,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -200,7 +197,7 @@
 
       return this.apiClient.callApi(
         '/user/{username}', 'DELETE',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -226,6 +223,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -238,7 +237,7 @@
 
       return this.apiClient.callApi(
         '/user/{username}', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -269,7 +268,9 @@
       };
       var queryParams = {
         'username': username,
-        'password': password
+        'password': password,
+      };
+      var collectionQueryParams = {
       };
       var headerParams = {
       };
@@ -283,7 +284,7 @@
 
       return this.apiClient.callApi(
         '/user/login', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -302,6 +303,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -314,7 +317,7 @@
 
       return this.apiClient.callApi(
         '/user/logout', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -346,6 +349,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -358,7 +363,7 @@
 
       return this.apiClient.callApi(
         '/user/{username}', 'PUT',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }

@@ -1,19 +1,24 @@
 package io.swagger.api.impl;
 
-import java.io.InputStream;
+import io.swagger.api.*;
+import io.swagger.model.*;
+
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+
+import java.io.File;
+import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
+
 import java.util.List;
+
+import java.io.InputStream;
 
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-
-import io.swagger.api.*;
-import io.swagger.model.Pet;
-
 @RequestScoped
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-10-11T07:40:42.070+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-11-17T08:53:42.205Z")
 public class PetApiServiceImpl implements PetApiService {
       @Override
       public Response addPet(Pet body, SecurityContext securityContext) {

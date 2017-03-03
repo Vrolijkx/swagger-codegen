@@ -1,6 +1,7 @@
 package io.swagger.api;
 
 import java.util.List;
+import io.swagger.model.User;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

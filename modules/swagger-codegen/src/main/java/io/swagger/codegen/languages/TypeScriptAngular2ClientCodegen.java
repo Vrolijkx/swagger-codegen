@@ -41,7 +41,9 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         embeddedTemplateDir = templateDir = "typescript-angular2";
         modelTemplateFiles.put("model.mustache", ".ts");
         apiTemplateFiles.put("api.service.mustache", ".ts");
+        languageSpecificPrimitives.add("Blob");
         typeMapping.put("Date","Date");
+        typeMapping.put("file","Blob");
         apiPackage = "api";
         modelPackage = "model";
 
@@ -75,7 +77,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
         supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
         supportingFiles.add(new SupportingFile("api.module.mustache", getIndexDirectory(), "api.module.ts"));
-        supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));        
+        supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));
         supportingFiles.add(new SupportingFile("configuration.mustache", getIndexDirectory(), "configuration.ts"));
         supportingFiles.add(new SupportingFile("variables.mustache", getIndexDirectory(), "variables.ts"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
@@ -117,6 +119,11 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     }
 
     @Override
+    public boolean isDataTypeFile(final String dataType) {
+        return dataType != null && dataType.equals("Blob");
+    }
+
+    @Override
     public String getTypeDeclaration(Property p) {
         Property inner;
         if(p instanceof ArrayProperty) {
@@ -127,7 +134,9 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
             MapProperty mp = (MapProperty)p;
             inner = mp.getAdditionalProperties();
             return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
-        } else if(p instanceof FileProperty || p instanceof ObjectProperty) {
+        } else if(p instanceof FileProperty) {
+            return "Blob";
+        } else if(p instanceof ObjectProperty) {
             return "any";
         } else {
             return super.getTypeDeclaration(p);
@@ -137,7 +146,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        if(languageSpecificPrimitives.contains(swaggerType)) {
+        if(isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
             return swaggerType;
         }
         applyLocalTypeMapping(swaggerType);
@@ -151,9 +160,13 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         return type;
     }
 
-    private boolean startsWithLanguageSpecificPrimitiv(String type) {
-        for (String langPrimitive:languageSpecificPrimitives) {
-            if (type.startsWith(langPrimitive))  {
+    private boolean isLanguagePrimitive(String type) {
+        return languageSpecificPrimitives.contains(type);
+    }
+
+    private boolean isLanguageGenericType(String type) {
+        for (String genericType: languageGenericTypes) {
+            if (type.startsWith(genericType + "<"))  {
                 return true;
             }
         }
@@ -226,24 +239,24 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
-			mo.put("tsImports", toTsImports(cm.imports));
+            mo.put("tsImports", toTsImports(cm.imports));
         }
-        
+
         return result;
     }
 
-	private List<Map<String, String>> toTsImports(Set<String> imports) {
-		List<Map<String, String>> tsImports = new ArrayList<>();
-		for(String im : imports) {
-			HashMap<String, String> tsImport = new HashMap<>();
-			tsImport.put("classname", im);
-			tsImport.put("filename", toModelFilename(im));
-			tsImports.add(tsImport);
-		}
-		return tsImports;
-	}
+    private List<Map<String, String>> toTsImports(Set<String> imports) {
+            List<Map<String, String>> tsImports = new ArrayList<>();
+            for(String im : imports) {
+                    HashMap<String, String> tsImport = new HashMap<>();
+                    tsImport.put("classname", im);
+                    tsImport.put("filename", toModelFilename(im));
+                    tsImports.add(tsImport);
+            }
+            return tsImports;
+    }
 
-	@Override
+    @Override
     public String toApiName(String name) {
         if (name.length() == 0) {
             return "DefaultService";

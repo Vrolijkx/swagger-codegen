@@ -1,7 +1,10 @@
 package io.swagger.api;
 
-import java.util.List;
+import java.io.File;
+import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
 
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import io.swagger.model.ModelApiResponse;
-import io.swagger.model.Pet;
+import java.util.List;
 
 
 @Api(value = "pet", description = "the pet API")

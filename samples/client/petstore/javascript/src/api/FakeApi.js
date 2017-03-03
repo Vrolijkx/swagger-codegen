@@ -9,17 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 (function(root, factory) {
@@ -66,6 +55,7 @@
 
     /**
      * To test \&quot;client\&quot; model
+     * To test \&quot;client\&quot; model
      * @param {module:model/Client} body client model
      * @param {module:api/FakeApi~testClientModelCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Client}
@@ -83,6 +73,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -95,7 +87,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'PATCH',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
@@ -157,6 +149,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -183,7 +177,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
@@ -197,6 +191,7 @@
      */
 
     /**
+     * To test enum parameters
      * To test enum parameters
      * @param {Object} opts Optional parameters
      * @param {Array.<module:model/String>} opts.enumFormStringArray Form parameter enum test (string array)
@@ -217,9 +212,14 @@
       var pathParams = {
       };
       var queryParams = {
-        'enum_query_string_array': this.apiClient.buildCollectionParam(opts['enumQueryStringArray'], 'csv'),
         'enum_query_string': opts['enumQueryString'],
-        'enum_query_integer': opts['enumQueryInteger']
+        'enum_query_integer': opts['enumQueryInteger'],
+      };
+      var collectionQueryParams = {
+        'enum_query_string_array': {
+          value: opts['enumQueryStringArray'],
+          collectionFormat: 'csv'
+        },
       };
       var headerParams = {
         'enum_header_string_array': opts['enumHeaderStringArray'],
@@ -232,13 +232,13 @@
       };
 
       var authNames = [];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
+      var contentTypes = ['*/*'];
+      var accepts = ['*/*'];
       var returnType = null;
 
       return this.apiClient.callApi(
         '/fake', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
