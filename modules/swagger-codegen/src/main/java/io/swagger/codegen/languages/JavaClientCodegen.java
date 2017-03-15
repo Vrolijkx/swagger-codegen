@@ -1,16 +1,27 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.codegen.languages.features.BeanValidationFeatures;
-import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
         implements BeanValidationFeatures, PerformBeanValidationFeatures {
@@ -309,7 +320,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             if(additionalProperties.containsKey("gson")) {
                 model.imports.add("SerializedName");
             }
-        } else { // enum class
+        }
+
+        if(BooleanUtils.toBoolean(model.hasEnums) || BooleanUtils.toBoolean(model.isEnum)){ // enum class
             //Needed imports for Jackson's JsonCreator
             if(additionalProperties.containsKey("jackson")) {
                 model.imports.add("JsonCreator");
