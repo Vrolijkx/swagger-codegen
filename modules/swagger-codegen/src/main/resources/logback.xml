@@ -6,6 +6,8 @@
         </layout>
     </appender>
     <logger name="io.swagger" level="DEBUG"/>
+    <!-- REMOVE THE STUPID STACKTRACE -->
+    <logger name="org.reflections.Reflections" level="ERROR" />
     <root level="error">
         <appender-ref ref="STDOUT"/>
     </root>
