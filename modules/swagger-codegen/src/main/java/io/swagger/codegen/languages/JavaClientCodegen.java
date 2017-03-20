@@ -330,6 +330,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         }
     }
 
+
+
     @Override
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         objs = super.postProcessModelsEnum(objs);
