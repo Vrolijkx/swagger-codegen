@@ -119,7 +119,9 @@ export class {{classname}} {
 {{/queryParams}}
 
 {{#headerParams}}
-        headers.set('{{baseName}}', String({{paramName}}));
+        if ({{paramName}} !== undefined) {
+            headers.set('{{baseName}}', String({{paramName}}));
+        }
 {{/headerParams}}
 
 {{#hasFormParams}}
