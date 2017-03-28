@@ -77,15 +77,17 @@ export class {{classname}} {
     public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any): Observable<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
         return this.{{nickname}}WithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-{{^isResponseFile}}
-                    return response.json();
-{{/isResponseFile}}
-{{#isResponseFile}}
-                    return response.blob();
-{{/isResponseFile}}
+                if (response.status >= 200 && response.status < 400) {
+                    if (response.text.length > 0) {
+                        {{^isResponseFile}}
+                            return response.json();
+                        {{/isResponseFile}}
+                        {{#isResponseFile}}
+                            return response.blob();
+                        {{/isResponseFile}}
+                    } else {
+                        return undefined
+                    }
                 }
             });
     }
@@ -99,7 +101,8 @@ export class {{classname}} {
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
     public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `{{path}}`;
+        const path = this.basePath + '{{{path}}}'{{#pathParams}}
+                    .replace('${' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -114,7 +117,17 @@ export class {{classname}} {
 {{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
+        {{#isDateTime}}
+            queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
+        {{/isDateTime}}
+        {{^isDateTime}}
+            {{#isDate}}
+            queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
+            {{/isDate}}
+            {{^isDate}}
             queryParameters.set('{{baseName}}', <any>{{paramName}});
+            {{/isDate}}
+        {{/isDateTime}}
         }
 {{/queryParams}}
 
@@ -154,44 +167,44 @@ export class {{classname}} {
         // authentication ({{name}}) required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-        if (this.configuration.apiKey)
-        {
+        if (this.configuration.apiKey) {
             headers.set('{{keyParamName}}', this.configuration.apiKey);
         }
+
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-        if (this.configuration.apiKey)
-        {
-            formParams.set('{{keyParamName}}', this.configuration.apiKey);
+        if (this.configuration.apiKey) {
+            queryParameters.set('{{keyParamName}}', this.configuration.apiKey);
         }
+
 {{/isKeyInQuery}}
 {{/isApiKey}}
 {{#isBasic}}
         // http basic authentication required
-        if (this.configuration.username || this.configuration.password)
-        {
+        if (this.configuration.username || this.configuration.password) {
             headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
         }
+
 {{/isBasic}}
 {{#isOAuth}}
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
+
 {{/isOAuth}}
 {{/authMethods}}
             
 {{#bodyParam}}
         headers.set('Content-Type', 'application/json');
-{{/bodyParam}}
 
+{{/bodyParam}}
 {{#formParams}}
         if ({{paramName}} !== undefined) {
-            formParams.set('{{baseName}}', {{paramName}}); 
+            formParams.set('{{baseName}}', <any>{{paramName}});
         }
 {{/formParams}}
 
@@ -212,7 +225,7 @@ export class {{classname}} {
         
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
-            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
         }
 
         return this.http.request(path, requestOptions);
