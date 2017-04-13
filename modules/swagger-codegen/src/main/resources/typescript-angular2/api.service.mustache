@@ -78,7 +78,7 @@ export class {{classname}} {
         return this.{{nickname}}WithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status >= 200 && response.status < 400) {
-                    if (response.text.length > 0) {
+                    if (response.text().length > 0) {
                         {{^isResponseFile}}
                             return response.json();
                         {{/isResponseFile}}

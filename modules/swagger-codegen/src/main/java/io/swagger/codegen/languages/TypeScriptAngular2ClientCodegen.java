@@ -239,19 +239,21 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
-            mo.put("tsImports", toTsImports(cm.imports));
+            mo.put("tsImports", toTsImports(cm));
         }
 
         return result;
     }
 
-    private List<Map<String, String>> toTsImports(Set<String> imports) {
+    private List<Map<String, String>> toTsImports(CodegenModel codegenModel) {
             List<Map<String, String>> tsImports = new ArrayList<>();
-            for(String im : imports) {
+            for(String im : codegenModel.imports) {
                     HashMap<String, String> tsImport = new HashMap<>();
                     tsImport.put("classname", im);
                     tsImport.put("filename", toModelFilename(im));
-                    tsImports.add(tsImport);
+                    if (!im.equals(codegenModel.classname)) {
+                        tsImports.add(tsImport);
+                    }
             }
             return tsImports;
     }
